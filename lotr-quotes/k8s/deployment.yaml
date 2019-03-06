@@ -5,7 +5,7 @@ metadata:
   labels: 
     app: lotr-quotes
 spec:
-  type: NodePort
+  type: ClusterIP
   selector:
     app: lotr-quotes
   ports:

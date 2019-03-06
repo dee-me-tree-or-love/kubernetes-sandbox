@@ -5,24 +5,35 @@ const config = require("./config.json");
 
 
 const createApp = (config) => {
-    return { app: express(), port: config.port || 3000, appName: config.appName || "n/a" };
-}
+    return { app: express(), port: config.port || 3000, appName: config.appName || "" };
+};
 
 const createQuote = (quoteItem) => {
-    return { "quote": quoteItem ? quoteItem.quote || "" : "n/a" };
-}
+    return {
+        "quote": quoteItem ? quoteItem.quote || "" : "N/A",
+        "author": quoteItem ? quoteItem.author || "unknown" : "N/A"
+    };
+    //return { "quote": "N/A" };
+};
 
-const selectRanomElement = (collection, createElement) => {
+const selectRandomElement = (collection, createElement) => {
     const index = Math.floor(Math.random() * collection.length);
     return createElement(collection[index]);
-}
+};
 
+const getReadyIndicator = (quotes) => {
+    return { "ready": quotes.length > 0 };
+};
 
 const { app, port, appName } = createApp(config);
 
 app.get("/quote", (req, res) => res.json(
-    selectRanomElement(quotes, createQuote)
-))
+    selectRandomElement(quotes, createQuote)
+));
+
+app.get("/ready", (req, res) => res.json(
+    getReadyIndicator(quotes)
+));
 
 app.listen(port, () => console.log(`"${appName}" listening on port ${port}!`));
 
