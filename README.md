@@ -12,7 +12,7 @@ Runs on port `8080`.
 
 
 ## Python-Starter
-Is a simple Python Flask service checking if the other service is ready (and pretends to be starting it). 
+Is a simple Python Flask service checking if the other service is ready (and pretends to be starting it).  
 Runs on port `5000`.
 
 
