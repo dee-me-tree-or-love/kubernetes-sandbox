@@ -1,5 +1,6 @@
 apiVersion: skaffold/v1beta5
 kind: Config
+
 build:
   artifacts:
   - image: gcr.io/k8s-skaffold/lotr-quotes
@@ -11,9 +12,36 @@ build:
     sync:
       '**/*.py': /usr/src/app
 
-
 deploy:
   kubectl:
     manifests:
     - ./lotr-quotes/k8s/*
     - ./python-starter/*
+
+
+profiles:
+- name: only-lotr
+  build: 
+    artifacts:
+    - image: gcr.io/k8s-skaffold/lotr-quotes
+      context: ./lotr-quotes/
+      sync:
+        '**/*.js': /usr/src/app
+  deploy:
+    kubectl:
+      manifests:
+      - ./lotr-quotes/k8s/*
+
+- name: only-starter
+  build: 
+    artifacts:
+    - image: gcr.io/k8s-skaffold/python-starter
+      context: ./python-starter/
+      sync:
+        '**/*.py': /usr/src/app
+
+  deploy:
+    kubectl:
+      manifests:
+      - ./python-starter/*
+
