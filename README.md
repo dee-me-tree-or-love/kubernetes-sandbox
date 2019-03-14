@@ -43,7 +43,7 @@ Expects the job suppied as an environment variable `MY_JOB_ITEM`.
  
 
 | env_key | value | operation |
-| --- | --- |
+| --- | --- | --- |
 | `MY_JOB_ITEM` | `string: <any string value>` | simply reverses the supplied item and writes the result to the console. |
 
 
