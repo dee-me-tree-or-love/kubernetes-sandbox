@@ -1,6 +1,8 @@
 # Kubernetes Sandbox
 Simple system to experiment with Kubernetes, Skaffold and friends  
 
+
+
 ## Components  
 
 ### Lotr-Quotes
@@ -38,10 +40,13 @@ Is not a service, but a running pod. Replicated to `5 (maybe different number)` 
 ### Job-Worker
 Is a `Job` container performing some action on the supplied job.  
 Expects the job suppied as an environment variable `MY_JOB_ITEM`.  
-  
-| env_key | value | operation | 
-| --- | --- | 
-| `MY_JOB_ITEM` | `string: <any string value>` | simply reverses the supplied item and writes the result to the console. | 
+ 
+
+| env_key | value | operation |
+| --- | --- |
+| `MY_JOB_ITEM` | `string: <any string value>` | simply reverses the supplied item and writes the result to the console. |
+
+
 
 ## Infrastructure
 
