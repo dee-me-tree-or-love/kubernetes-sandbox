@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: message-writer
+  labels: 
+    app: message-writer
+spec:
+  type: ClusterIP
+  selector:
+    app: message-writer
+  ports:
+  - protocol: TCP
+    port: 5050
+    targetPort: 5050
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: message-writer
+  labels: 
+    app: message-writer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: message-writer
+  template:
+    metadata:
+      labels:
+        app: message-writer
+    spec:
+      containers:
+      - name: message-writer
+        image: gcr.io/k8s-skaffold/message-writer
+        ports:
+        - containerPort: 5050

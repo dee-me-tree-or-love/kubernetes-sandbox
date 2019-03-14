@@ -1,6 +1,8 @@
-# Toy Example For Skaffold With FileSync
+# Sandbox System for Kubernetes, Skaffold and friends
 
-## Lotr-Quotes
+## Components  
+
+### Lotr-Quotes
 Is a simple Node.js Express service giving a random quote out of 50 "Lord Of The Rings" quotes.   
 Runs on port `8080`.
 
@@ -11,7 +13,7 @@ Runs on port `8080`.
 | GET: /ready | returns `JSON: {ready}` to indicate if ready to serve |
 
 
-## Python-Starter
+### Python-Starter
 Is a simple Python Flask service checking if the other service is ready (and pretends to be starting it).  
 Runs on port `5000`.
 
@@ -20,7 +22,21 @@ Runs on port `5000`.
 | --- | --- |
 | GET: / | returns `TEXT: <whether ready or not message>` |
 
-## Skaffold
+### Message-Writer
+Is a simple Python Flask service that publishes the received messages to the `rabbitmq` service.
+
+
+| route | purpose |
+| --- | --- |
+| POST: /publish | for JSON input: `'{"food": "<your food>"}'` publishes the content to the queue of topic `food` |
+
+### Message-Worker
+A listening process that waits for the incoming messages from the `rabbitmq`.  
+Is not a service, but a running pod. Replicated to `5 (maybe different number)` instances.  
+
+## Infrastructure
+
+### Skaffold
 > _Disclaimer: use `Skaffold v0.23.0` while `sync` issues are not solved_.  
 
 The definition for the Skaffold project is described in `skaffold.yaml`.  
@@ -45,4 +61,7 @@ build:
 WORKDIR /usr/src/app
 ...
 ```
+
+### Rabbitmq
+The deployment of a [`rabbitmq`](https://www.rabbitmq.com/) service is described in `./insfrastructure/rabbitmq/k8s/deployment.yaml`.  
 

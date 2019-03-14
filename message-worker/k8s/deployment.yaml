@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: message-worker
+  labels: 
+    app: message-worker
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: message-worker
+  template:
+    metadata:
+      labels:
+        app: message-worker
+    spec:
+      containers:
+      - name: message-worker
+        image: gcr.io/k8s-skaffold/message-worker
+        env:
+        - name: MY_POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name

@@ -11,13 +11,23 @@ build:
     context: ./python-starter/
     sync:
       '**/*.py': /usr/src/app
+  - image: gcr.io/k8s-skaffold/message-writer
+    context: ./message-writer/
+    sync:
+      '**/*.py': /usr/src/app
+  - image: gcr.io/k8s-skaffold/message-worker
+    context: ./message-worker/
+    # sync:
+    #   '**/*.py': /usr/src/app
 
 deploy:
   kubectl:
     manifests:
     - ./lotr-quotes/k8s/*
-    - ./python-starter/*
-
+    - ./python-starter/k8s/*
+    - ./message-writer/k8s/*
+    - ./message-worker/k8s/*
+    - ./infrastructure/**/k8s/*
 
 profiles:
 - name: only-lotr
@@ -43,5 +53,5 @@ profiles:
   deploy:
     kubectl:
       manifests:
-      - ./python-starter/*
+      - ./python-starter/k8s/*
 
