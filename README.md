@@ -1,4 +1,5 @@
-# Sandbox System for Kubernetes, Skaffold and friends
+# Kubernetes Sandbox
+Simple system to experiment with Kubernetes, Skaffold and friends  
 
 ## Components  
 
