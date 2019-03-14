@@ -17,8 +17,9 @@ build:
       '**/*.py': /usr/src/app
   - image: gcr.io/k8s-skaffold/message-worker
     context: ./message-worker/
-    # sync:
-    #   '**/*.py': /usr/src/app
+  - image: gcr.io/k8s-skaffold/job-worker
+    context: ./job-worker/
+
 
 deploy:
   kubectl:

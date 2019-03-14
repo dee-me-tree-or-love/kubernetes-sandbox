@@ -9,7 +9,7 @@ QUEUE_SUBJECT = 'food'
 
 
 def make_message(content):
-    return content[QUEUE_SUBJECT]
+    return str(content[QUEUE_SUBJECT])
 
 
 @application.route('/publish', methods=['POST'])

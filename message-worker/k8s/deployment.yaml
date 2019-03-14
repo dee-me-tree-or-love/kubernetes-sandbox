@@ -5,7 +5,7 @@ metadata:
   labels: 
     app: message-worker
 spec:
-  replicas: 5
+  replicas: 3
   selector:
     matchLabels:
       app: message-worker
@@ -14,6 +14,7 @@ spec:
       labels:
         app: message-worker
     spec:
+      serviceAccountName: job-creator
       containers:
       - name: message-worker
         image: gcr.io/k8s-skaffold/message-worker
@@ -22,3 +23,33 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.name
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: job-creator
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  namespace: default
+  name: job-creator-role
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["batch", "extensions"]
+  resources: ["jobs"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: job-creator-role-binding
+subjects:
+- kind: ServiceAccount
+  name: job-creator
+roleRef:
+  kind: Role
+  name: job-creator-role
+  apiGroup: rbac.authorization.k8s.io
