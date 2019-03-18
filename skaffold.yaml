@@ -18,10 +18,10 @@ build:
     context: ./message-writer/
     sync:
       '**/*.py': /usr/src/app
-  - image: gcr.io/k8s-skaffold/message-worker
-    context: ./message-worker/
-  - image: gcr.io/k8s-skaffold/job-worker
-    context: ./job-worker/
+  - image: gcr.io/k8s-skaffold/food-message-receiver
+    context: ./food-message-receiver/
+  - image: gcr.io/k8s-skaffold/food-job-worker
+    context: ./food-job-worker/
 
 
 deploy:
@@ -30,7 +30,7 @@ deploy:
     - ./lotr-quotes/k8s/*
     - ./python-starter/k8s/*
     - ./message-writer/k8s/*
-    - ./message-worker/k8s/*
+    - ./food-message-receiver/k8s/*
     - ./infrastructure/**/k8s/*
 
 profiles:
@@ -44,12 +44,12 @@ profiles:
       context: ./message-writer/
       sync:
         '**/*.py': /usr/src/app
-    - image: gcr.io/k8s-skaffold/message-worker
-      context: ./message-worker/
+    - image: gcr.io/k8s-skaffold/food-message-receiver
+      context: ./food-message-receiver/
       sync:
         '**/*.py': /usr/src/app
-    - image: gcr.io/k8s-skaffold/job-worker
-      context: ./job-worker/
+    - image: gcr.io/k8s-skaffold/food-job-worker
+      context: ./food-job-worker/
 
 
 - name: only-lotr

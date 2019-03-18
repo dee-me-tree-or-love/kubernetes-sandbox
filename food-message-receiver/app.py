@@ -17,7 +17,7 @@ QUEUE_SUBJECT = 'food'
 NAMESPACE = 'default'
 POD_NAME = os.environ.get('MY_POD_NAME', 'n/a')
 TAG = 'dirty_%s' % (str(os.environ['SKAFFOLD_TAG_SUFFIX']))
-JOB_WORKER_NAME = 'job-worker'
+JOB_WORKER_NAME = 'food-job-worker'
 JOB_ITEM_KEY = 'MY_JOB_ITEM'
 JOB_BACKOFF_LIMIT = 5
 # FIXME: define the container image in a different way

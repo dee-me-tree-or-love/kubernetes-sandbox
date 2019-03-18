@@ -33,12 +33,12 @@ Is a simple Python Flask service that publishes the received messages to the `ra
 | --- | --- |
 | POST: /publish | for JSON input: `'{"food": "<your food>"}'` publishes the content to the queue of topic `food` |
 
-### Message-Worker
-A listening process that waits for the incoming messages from the `rabbitmq`.  
+### Food-Message-Worker
+A listening process that waits for the incoming messages from the `rabbitmq` queue with `food` topic.  
 Is not a service, but a running pod. Replicated to `5 (maybe different number)` instances.  
 
-### Job-Worker
-Is a `Job` container performing some action on the supplied job.  
+### Food-Job-Worker
+Is a `Job` container performing some action on the supplied `food` job.  
 Expects the job suppied as an environment variable `MY_JOB_ITEM`.  
  
 

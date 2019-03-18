@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: message-worker
+  name: food-message-receiver
   labels: 
-    app: message-worker
+    app: food-message-receiver
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: message-worker
+      app: food-message-receiver
   template:
     metadata:
       labels:
-        app: message-worker
+        app: food-message-receiver
     spec:
       serviceAccountName: job-creator
       containers:
-      - name: message-worker
-        image: gcr.io/k8s-skaffold/message-worker
+      - name: food-message-receiver
+        image: gcr.io/k8s-skaffold/food-message-receiver
         env:
         - name: SKAFFOLD_TAG_SUFFIX
           # FIXME: kubectl will never support variable substitution (https://github.com/kubernetes/kubernetes/issues/52787)
