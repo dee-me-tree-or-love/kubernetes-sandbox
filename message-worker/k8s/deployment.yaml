@@ -19,6 +19,9 @@ spec:
       - name: message-worker
         image: gcr.io/k8s-skaffold/message-worker
         env:
+        - name: SKAFFOLD_TAG_SUFFIX
+          # FIXME: kubectl will never support variable substitution (https://github.com/kubernetes/kubernetes/issues/52787)
+          value: skaffold_image
         - name: MY_POD_NAME
           valueFrom:
             fieldRef:

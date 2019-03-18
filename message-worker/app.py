@@ -16,12 +16,13 @@ from kubernetes import client, config
 QUEUE_SUBJECT = 'food'
 NAMESPACE = 'default'
 POD_NAME = os.environ.get('MY_POD_NAME', 'n/a')
+TAG = 'dirty_%s' % (str(os.environ['SKAFFOLD_TAG_SUFFIX']))
 JOB_WORKER_NAME = 'job-worker'
 JOB_ITEM_KEY = 'MY_JOB_ITEM'
 JOB_BACKOFF_LIMIT = 5
 # FIXME: define the container image in a different way
 # FIXME: fix the tag name -> use a different tagger in skaffold?
-CONTAINER_IMAGE = 'gcr.io/k8s-skaffold/%s:b4b09c8-dirty' % JOB_WORKER_NAME
+CONTAINER_IMAGE = 'gcr.io/k8s-skaffold/%s:%s' % (JOB_WORKER_NAME, TAG)
 
 logger = logging.getLogger()
 
@@ -71,6 +72,7 @@ def make_job(work_item):
     job.spec = client.V1JobSpec(
         template=make_job_template(work_item),
         backoff_limit=JOB_BACKOFF_LIMIT,
+        # This is an alpha feature requiring the feature-gate to be enabled
         ttl_seconds_after_finished=100
     )
     return job

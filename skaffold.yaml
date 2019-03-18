@@ -2,6 +2,9 @@ apiVersion: skaffold/v1beta5
 kind: Config
 
 build:
+  tagPolicy:
+    envTemplate:
+      template: "{{.IMAGE_NAME}}:dirty_{{.SKAFFOLD_TAG_SUFFIX}}"
   artifacts:
   - image: gcr.io/k8s-skaffold/lotr-quotes
     context: ./lotr-quotes/
@@ -31,6 +34,24 @@ deploy:
     - ./infrastructure/**/k8s/*
 
 profiles:
+- name: only-message
+  build:
+    tagPolicy:
+      envTemplate:
+        template: "{{.IMAGE_NAME}}:dirty_{{.SKAFFOLD_TAG_SUFFIX}}"
+    artifacts:
+    - image: gcr.io/k8s-skaffold/message-writer
+      context: ./message-writer/
+      sync:
+        '**/*.py': /usr/src/app
+    - image: gcr.io/k8s-skaffold/message-worker
+      context: ./message-worker/
+      sync:
+        '**/*.py': /usr/src/app
+    - image: gcr.io/k8s-skaffold/job-worker
+      context: ./job-worker/
+
+
 - name: only-lotr
   build: 
     artifacts:
