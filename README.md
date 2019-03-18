@@ -31,7 +31,7 @@ Is a simple Python Flask service that publishes the received messages to the `ra
 
 | route | purpose |
 | --- | --- |
-| POST: /publish | for JSON input: `'{"food": "<your food>"}'` publishes the content to the queue of topic `food` |
+| POST: /publish | for JSON input: `'{"<your subject>": "<your message>"}'` publishes the content to the queue of topic `<your subject>` |
 
 ### Food-Message-Worker
 A listening process that waits for the incoming messages from the `rabbitmq` queue with `food` topic.  
